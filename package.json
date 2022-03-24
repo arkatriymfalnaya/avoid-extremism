@@ -1,0 +1,22 @@
+{
+  "name": "xlsx-from-rss-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-xml-parser": "^4.0.7",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "moment": "^2.29.1",
+    "progress": "^2.0.3",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "yargs": "^17.2.1"
+  }
+}
