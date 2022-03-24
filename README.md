@@ -1,4 +1,4 @@
-# xlsx-from-rss-generator
+# avoid-extremism
 
 Your safety net to avoid extremism and replace Meta company product's name's with WordPress Tooltip fastly.<br />
 
