@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const yargs = require('yargs')
 
-let replaceWithToolbar = str => str.replace(/[^\[|\/](meta|instagram|facebook|инстаграм|мета|фейсбук)[а-яА-Я]*/gi, (subStr, _, subStrIndex) => {
+let replaceWithFootnote = (str, isTitle = false) => str.replace(/[^\[|\/](meta|instagram|facebook|инстаграм|мета|фейсбук)[а-яА-Я]*/gi, (subStr, _, subStrIndex) => {
   let nextSymbol = str[subStrIndex + subStr.length]
   
   if(str[subStrIndex - 3] + str[subStrIndex - 2] + str[subStrIndex - 1] + str[subStrIndex] === 'www.') return subStr
@@ -19,27 +19,32 @@ let replaceWithToolbar = str => str.replace(/[^\[|\/](meta|instagram|facebook|и
       ? 'Продукт принадлежит организации, признанной экстремистской на территории Российской Федерации.'
       : 'Организация признана экстремистской на территории Российской Федерации.'
 
-  return `${start}${space}[su_tooltip text="${tooltipText}" text_align="center"]${updatedStr}[/su_tooltip]${end}`
+  let res = isTitle ? `${subStr}*` : `${start}${space}[su_tooltip text="${tooltipText}" text_align="center"]${updatedStr}[/su_tooltip]${end}`
+  return res
 })
 
 let entry = async (fileName) => {
   const data = fs.readFileSync(path.join(__dirname, fileName), 'utf8')
   const parser = new XMLParser()
   let jObj = parser.parse(data)
-  
+
+  let title = jObj.rss.channel.item['title']
+  let newTitle = replaceWithFootnote(title, true)
+  jObj.rss.channel.item['title'] = newTitle
+console.log(jObj.rss.channel.item['title'])
   let metasArray = jObj.rss.channel.item['wp:postmeta']
   let newMetasArray = metasArray.map(m => {
     if(m['wp:meta_key'] === '_crb_description' || m['wp:meta_key'] === '_crb_short_description') {
-      let newMeta = replaceWithToolbar(m['wp:meta_value'])
+      let newMeta = replaceWithFootnote(m['wp:meta_value'])
       m['wp:meta_value'] = newMeta
     }
     
     return m
   })
   jObj.rss.channel.item['wp:postmeta'] = newMetasArray
-  
+
   let content = jObj.rss.channel.item['content:encoded']
-  let newContent = replaceWithToolbar(content)
+  let newContent = replaceWithFootnote(content)
   jObj.rss.channel.item['content:encoded'] = newContent
   
   jObj.rss.channel.item['wp:status'] = '<![CDATA[draft]]>'
