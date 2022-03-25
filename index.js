@@ -19,7 +19,7 @@ let replaceWithToolbar = str => str.replace(/[^\[|\/](meta|instagram|facebook|и
       ? 'Продукт принадлежит организации, признанной экстремистской на территории Российской Федерации.'
       : 'Организация признана экстремистской на территории Российской Федерации.'
 
-  return `${start}[su_tooltip text="${tooltipText}"]${space}${updatedStr}*[/su_tooltip]${end}`
+  return `${start}${space}[su_tooltip text="${tooltipText}" text_align="center"]${updatedStr}[/su_tooltip]${end}`
 })
 
 let entry = async (fileName) => {
