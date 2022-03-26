@@ -31,7 +31,7 @@ let entry = async (fileName) => {
   let title = jObj.rss.channel.item['title']
   let newTitle = replaceWithFootnote(title, true)
   jObj.rss.channel.item['title'] = newTitle
-console.log(jObj.rss.channel.item['title'])
+
   let metasArray = jObj.rss.channel.item['wp:postmeta']
   let newMetasArray = metasArray.map(m => {
     if(m['wp:meta_key'] === '_crb_description' || m['wp:meta_key'] === '_crb_short_description') {
