@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "fast-xml-parser": "^4.0.7",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "posthtml": "^0.16.6"
   },
   "devDependencies": {
     "yargs": "^17.2.1"
